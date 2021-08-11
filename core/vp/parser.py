@@ -3,13 +3,15 @@ from .notations import pause, chords
 from enum import Enum
 import io
 
+notations_list = (pause, chords)
 symbol_to_notation = {}
-for key, notation in (pause, chords):
-    if "symbols" in notation:
-        for symbols in notation[symbols]:
-            symbol_to_notation[symbols] = key
-    else:
-        symbol_to_notation[notation["symbol"]] = key
+for notations in notations_list:
+    for key, notation in notations.items():
+        if "symbols" in notation:
+            for symbols in notation[symbols]:
+                symbol_to_notation[symbols] = key
+        else:
+            symbol_to_notation[notation["symbol"]] = key
 
 class Parser:
     def __init__(self, input_source=None, callback_meta=None, callback_note=None, callback_chord=None, callback_pause=None):
