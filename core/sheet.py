@@ -1,4 +1,5 @@
 from enum import Enum
+from .vp.sheet_defaults import SheetParserDefaults
 
 class EXPORT_TYPE(Enum):
     VP_SHEET = 0
@@ -23,7 +24,3 @@ class Sheet(SheetParserDefaults):
     def append(self, notes, index=None):
         pass
 
-class SheetParserDefaults:
-
-    def on_note():
-        pass
