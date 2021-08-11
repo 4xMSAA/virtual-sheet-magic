@@ -8,14 +8,11 @@ class KeyboardWrapper(BaseInputWrapper):
         self.__specialUpperKeys = {
             "!": "shift+1",
             "@": "shift+2",
-            "#": "shift+3",
             "$": "shift+4",
             "%": "shift+5",
             "^": "shift+6",
-            "&": "shift+7",
             "*": "shift+8",
-            "(": "shift+9",
-            ")": "shift+0",
+            "(": "shift+9"
         }
 
     def __solve_code(self, key):
