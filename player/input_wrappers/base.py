@@ -1,6 +1,6 @@
 class BaseInputWrapper():
     def send_chord(self, chord):
-        pass
+        raise NotImplementedError()
     
     def send_key(self, key):
-        pass
+        raise NotImplementedError()
