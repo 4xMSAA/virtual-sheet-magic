@@ -5,7 +5,11 @@ import io
 
 symbol_to_notation = {}
 for key, notation in (pause, chords):
-    symbol_to_notation[notation["symbol"]] = key
+    if "symbols" in notation:
+        for symbols in notation[symbols]:
+            symbol_to_notation[symbols] = key
+    else:
+        symbol_to_notation[notation["symbol"]] = key
 
 class Parser:
     def __init__(self, input_source=None, callback_meta=None, callback_note=None, callback_chord=None, callback_pause=None):
@@ -17,9 +21,13 @@ class Parser:
         if isinstance(input_source, io.IOBase):
             for line in input_source:
                 self.buffer = self.buffer + line
+        else:
+            self.buffer = input_source
         
         for char in self.buffer:
             if char in symbol_to_notation:
+                if char == chords["begin"]:
+                    pass
                 pass
             else:
                 pass

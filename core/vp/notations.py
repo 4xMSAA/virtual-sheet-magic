@@ -1,7 +1,7 @@
 pause = {
     "eight": {"symbol": ",", "scale": 1/8},
     "quarter": {"symbol": "'", "scale": 1/4},
-    "half": {"symbol": "|", "scale": 1/2},
+    "half": {"symbols": ["|", "\n"], "scale": 1/2},
     "whole": {"symbol": ":", "scale": 1}
 }
 
