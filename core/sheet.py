@@ -8,9 +8,9 @@ class EXPORT_TYPE(Enum):
 
 class Sheet(SheetParserDefaults):
     def __init__(self, tempo=110, beats=4, measure=4):
-        self.tempo = 0
-        self.beats = 0
-        self.measure = 0
+        self.tempo = tempo
+        self.beats = beats
+        self.measure = measure
 
     def export(self, export_type):
 
