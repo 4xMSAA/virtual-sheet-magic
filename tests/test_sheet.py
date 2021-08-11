@@ -10,6 +10,6 @@ class TestSheet(unittest.TestCase):
         self.sheet = Sheet()
 
     def test_sheet_append(self):
-        self.assertEquals(self.sheet.export(EXPORT_TYPE.VP_SHEET_NO_METADATA), "")
+        self.assertEqual(self.sheet.export(EXPORT_TYPE.VP_SHEET_NO_METADATA), "")
         self.sheet.append("[qwe]")
-        self.assertEquals(self.sheet.export(EXPORT_TYPE.VP_SHEET_NO_METADATA), "[qwe]")
+        self.assertEqual(self.sheet.export(EXPORT_TYPE.VP_SHEET_NO_METADATA), "[qwe]")

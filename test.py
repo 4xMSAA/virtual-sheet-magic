@@ -6,4 +6,4 @@ import unittest
 try:
     unittest.main()
 except SystemExit:
-    pass
+    raise NotImplementedError()

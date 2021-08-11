@@ -1,10 +1,12 @@
 class SheetParserDefaults:
+    def __init__(self):
+        self.notes = {}
 
     def on_meta(self):
-        pass
+        raise NotImplementedError()
     def on_note(self):
-        pass
+        raise NotImplementedError()
     def on_chord(self):
-        pass
+        raise NotImplementedError()
     def on_pause(self):
-        pass
+        raise NotImplementedError()

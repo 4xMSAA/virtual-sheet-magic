@@ -8,6 +8,7 @@ class EXPORT_TYPE(Enum):
 
 class Sheet(SheetParserDefaults):
     def __init__(self, tempo=110, beats=4, measure=4):
+        SheetParserDefaults.__init__(self)
         self.tempo = tempo
         self.beats = beats
         self.measure = measure
@@ -16,11 +17,24 @@ class Sheet(SheetParserDefaults):
 
         if export_type == EXPORT_TYPE.VP_SHEET or export_type == EXPORT_TYPE.VP_SHEET_NO_METADATA:
             # do conversion to virtual piano sheet
+            buffer = ""
 
             # include metadata
             if export_type == EXPORT_TYPE.VP_SHEET:
-                pass
+                raise NotImplementedError()
+            return buffer
     
     def append(self, notes, index=None):
-        pass
+        raise NotImplementedError()
 
+    def on_meta(self):
+        raise NotImplementedError()
+
+    def on_note(self):
+        raise NotImplementedError()
+    
+    def on_chord(self):
+        raise NotImplementedError()
+    
+    def on_pause(self):
+        raise NotImplementedError()

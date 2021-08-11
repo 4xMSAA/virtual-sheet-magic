@@ -3,12 +3,11 @@ from .notations import pause, chords
 from enum import Enum
 import io
 
-notations_list = (pause, chords)
 symbol_to_notation = {}
-for notations in notations_list:
+for notations in (pause, chords):
     for key, notation in notations.items():
         if "symbols" in notation:
-            for symbols in notation[symbols]:
+            for symbols in notation["symbols"]:
                 symbol_to_notation[symbols] = key
         else:
             symbol_to_notation[notation["symbol"]] = key
@@ -28,8 +27,8 @@ class Parser:
         
         for char in self.buffer:
             if char in symbol_to_notation:
-                if char == chords["begin"]:
-                    pass
-                pass
+                if char == chords["begin"]["symbol"]:
+                    raise NotImplementedError()
+                raise NotImplementedError()
             else:
-                pass
+                raise NotImplementedError()
