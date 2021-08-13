@@ -5,7 +5,10 @@ from core.vp.sheet_defaults import SheetParserDefaults
 class TestParsing(unittest.TestCase):
 
     def setUp(self):
-        self.vp_sheet = open("tests/resources/test.vpsheet").read()
+        self.vp_sheet = ""
+        file = open("resources/test.vpsheet")
+        for line in file:
+            self.vp_sheet = self.vp_sheet + line
     
     def test_parser(self):
         parser = Parser()

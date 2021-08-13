@@ -1,9 +1,6 @@
 from core.sheet import Sheet, EXPORT_TYPE
 import unittest
 
-import os
-import time
-
 class TestSheet(unittest.TestCase):
 
     def setUp(self):
