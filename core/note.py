@@ -9,7 +9,7 @@ midi_to_note_index_boundary = (12, 108)
 transpose_range = (-12, 12)
 
 def key_to_midi_index(key):
-   return A4_midi_index + (key_map.index(key) - A4_key_index) 
+   return A4_midi_index + (key_map.index(key) - A4_key_index) - 12 
 
 def midi_index_to_key(index, transpose):
     return key_map[ 
