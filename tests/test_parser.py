@@ -6,8 +6,10 @@ class TestParsing(unittest.TestCase):
 
     def setUp(self):
         self.vp_sheet = ""
-        for line in open("tests/resources/test.vpsheet"):
+        file = open("tests/resources/test.vpsheet")
+        for line in file:
             self.vp_sheet = self.vp_sheet + line
+        file.close()
     
     def test_parser(self):
         parser = Parser()
