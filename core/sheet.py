@@ -1,17 +1,17 @@
 from enum import Enum
-from .vp.sheet_defaults import SheetParserDefaults
 
 class EXPORT_TYPE(Enum):
     VP_SHEET = 0
     VP_SHEET_NO_METADATA = 1
     MIDI = 2
 
-class Sheet(SheetParserDefaults):
-    def __init__(self, tempo=110, beats=4, measure=4):
-        SheetParserDefaults.__init__(self)
+class Sheet():
+    def __init__(self, tempo=110, beats=4, measure=4, transpose=0):
+        self.track = []
         self.tempo = tempo
         self.beats = beats
         self.measure = measure
+        self.transpose = transpose
 
     def export(self, export_type):
 

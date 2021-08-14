@@ -25,10 +25,16 @@ class Parser:
         else:
             self.buffer = input_source
         
+        chord_buffer = ""
         for char in self.buffer:
             if char in symbol_to_notation:
                 if char == chords["begin"]["symbol"]:
-                    raise NotImplementedError()
-                raise NotImplementedError()
+                    chord_buffer = char
+                if char == chords["end"]["symbol"]:
+                    callback_chord(chord_buffer.strip("["))
+                    chord_buffer = ""
+
+            elif len(chord_buffer) == 0:
+                callback_note(char)
             else:
-                raise NotImplementedError()
+                chord_buffer = chord_buffer + char
