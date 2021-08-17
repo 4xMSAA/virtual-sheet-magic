@@ -1,5 +1,6 @@
 import unittest
 from core.note import Note
+from core.chord import Chord
 
 key_map = list("1!2@34$5%6^78*9(0qQwWeErtTyYuiIoOpPasSdDfgGhHjJklLzZxcCvVbBnm")
 midi_index_start = 12 # C1
@@ -38,3 +39,16 @@ class TestNote(unittest.TestCase):
                 expected_key_map[key_map_transposing.index(key)], 
                 note.to_key(0)
             )
+
+class TestChord(unittest.TestCase):
+    
+    def test_chord_list(self):
+        input_notes = list("tewi")
+        
+        chord = Chord()
+        for key in input_notes:
+            chord.append(Note(from_key=key))
+
+        self.assertEqual(input_notes, chord.as_keys())
+
+        

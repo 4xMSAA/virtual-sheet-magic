@@ -35,5 +35,5 @@ class Note():
     def from_key(self, key):
         self.index = key_to_midi_index(key)
         
-    def to_key(self, global_transpose):
+    def to_key(self, global_transpose=0):
         return midi_index_to_key(self.index, global_transpose)
