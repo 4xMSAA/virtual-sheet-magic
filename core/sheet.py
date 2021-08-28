@@ -1,3 +1,4 @@
+"""Responsible for storing notes/chords. Implement `on_*` callbacks by extending this class."""
 from typing import Union
 from enum import Enum
 from core.chord import Chord
@@ -5,6 +6,7 @@ from core.note import Note
 
 
 class ExportType(Enum):
+    """Enum for types of files that can be exported"""
     VP_SHEET = 0
     VP_SHEET_NO_METADATA = 1
     MIDI = 2
@@ -22,9 +24,8 @@ class Sheet():
         self.measure = measure
         self.transpose = transpose
 
-    def export(self, ExportType: ExportType) -> str:
-
-        if ExportType == ExportType.VP_SHEET or ExportType == ExportType.VP_SHEET_NO_METADATA:
+    def export(self, export_type: ExportType) -> str:
+        if export_type == ExportType.VP_SHEET or export_type == ExportType.VP_SHEET_NO_METADATA:
             # do conversion to virtual piano sheet
             buffer = ""
 
@@ -36,10 +37,12 @@ class Sheet():
                     buffer = buffer + note_or_chord.to_key(self.transpose)
 
             # include metadata
-            if ExportType == ExportType.VP_SHEET:
+            if export_type == ExportType.VP_SHEET:
                 raise NotImplementedError()
 
             return buffer
+
+        raise ValueError("no such ExportType as {}".format(export_type))
 
     def append(self, note_or_chord: Union[Note, Chord]):
         self.track.append(note_or_chord)

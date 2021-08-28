@@ -26,27 +26,33 @@ def midi_index_to_key(index, transpose):
 
 
 class Note():
-    def __init__(self, index: int = A4_MIDI_INDEX, from_key: str = None, value: int = 1, transpose: int = 0):
+    def __init__(self,
+                 index: int = A4_MIDI_INDEX,
+                 from_key: str = None,
+                 value: int = 1,
+                 transpose: int = 0):
         """Creates a Note object from either virtual piano keys or a MIDI note index
 
         Args:
             index (int, optional): The MIDI note index to use. Defaults to A4_MIDI_INDEX.
-            from_key (str, optional): Virtual piano key that is converted to MIDI index. Defaults to None.
-            value (int, optional): Note value that indicates the relative pause between notes in a multiplying manner. Defaults to 1.
+            from_key (str, optional): Virtual piano key that is converted to MIDI index.
+                                      Defaults to None.
+            value (int, optional): Note value that indicates the relative pause between notes in
+                                   a multiplying manner. Defaults to 1.
             transpose (int, optional): How much to transpose the note  up/down. Defaults to 0.
         """
         if from_key is not None:
             self.from_key(from_key)
         else:
             self.index = index
-        
+
         self.value = value
         self.chromatic_transpose(transpose)
 
-    def chromatic_transpose(self, amount):
+    def chromatic_transpose(self, amount: int):
         self.index = self.index + amount
 
-    def from_key(self, key):
+    def from_key(self, key: str):
         self.index = key_to_midi_index(key)
 
     def to_key(self, global_transpose: int = 0):
