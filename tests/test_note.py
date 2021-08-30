@@ -41,10 +41,8 @@ class TestNote(unittest.TestCase):
 
 class TestChord(unittest.TestCase):
     def test_chord_list(self):
-        input_notes = list("tewi")
+        input_notes = "tewi"
 
-        chord = Chord()
-        for key in input_notes:
-            chord.append(Note(from_key=key))
+        chord = Chord(from_keys=input_notes)
 
-        self.assertEqual(input_notes, chord.as_keys())
+        self.assertEqual(input_notes, "".join(chord.as_keys()))

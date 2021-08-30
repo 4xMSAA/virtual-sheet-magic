@@ -1,3 +1,4 @@
+from enum import Enum
 from core.note import Note
 
 
@@ -5,13 +6,19 @@ class Chord(list[Note]):
     def __init__(self,
                  notes: Note = None,
                  from_keys: str = None,
-                 transpose: int = 0):
+                 transpose: int = 0,
+                 value: float = 1/4,
+                 rate: float = 0):
+        self.value = value
+        self.rate = rate
+
         if notes is not None:
             for note in notes:
+                note.set_value(self.rate)
                 self.append(note)
         if from_keys is not None:
             for key in from_keys:
-                self.append(Note(from_key=key, transpose=transpose))
+                self.append(Note(from_key=key, transpose=transpose, value=rate))
 
     def chromatic_transpose(self, amount: int):
         for note in self:

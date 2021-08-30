@@ -29,7 +29,7 @@ class Note():
     def __init__(self,
                  index: int = A4_MIDI_INDEX,
                  from_key: str = None,
-                 value: int = 1,
+                 value: float = 1,
                  transpose: int = 0):
         """Creates a Note object from either virtual piano keys or a MIDI note index
 

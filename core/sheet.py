@@ -13,22 +13,19 @@ class ExportType(Enum):
     MIDI = 2
 
 
-def get_chord_value(chord: Chord):
-    return Chord[0].value
-
-
 def value_to_notation(value: int):
     return value > 1 and ">" * value or value < 1 and "<" * (1 / value) or None
 
 
 def make_vp_chord(chord: Chord, transpose: int):
     buffer = ""
-    if get_chord_value(chord) == 1/16:
-        buffer = buffer + notations.BROKEN_CHORDS.begin.symbol + "".join(
-            chord.as_keys(transpose)) + notations.BROKEN_CHORDS.end.symbol
+    if chord.value == 1/16:
+        buffer = buffer + notations.BROKEN_CHORDS["begin"]["symbol"] + "".join(
+            chord.as_keys(transpose)) + notations.BROKEN_CHORDS["end"]["symbol"]
     else:
-        buffer = buffer + notations.CHORDS.begin.symbol + "".join(
-            chord.as_keys(transpose)) + notations.CHORDS.end.symbol
+        buffer = buffer + notations.CHORDS["begin"]["symbol"] + "".join(
+            chord.as_keys(transpose)) + notations.CHORDS["end"]["symbol"]
+    return buffer
 
 
 class Sheet():
@@ -74,3 +71,6 @@ class Sheet():
     def set_beats_per_measure(self, beats: int, measure: int):
         self.beats = beats
         self.measure = measure
+
+    def set_transpose(self, transpose: int):
+        self.transpose = transpose

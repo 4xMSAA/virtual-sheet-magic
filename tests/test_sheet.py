@@ -13,3 +13,12 @@ class TestSheet(unittest.TestCase):
         self.sheet.append(Chord(from_keys="qwe"))
         self.assertEqual(self.sheet.export(ExportType.VP_SHEET_NO_METADATA),
                          "[qwe]")
+
+    def test_sheet_export(self):
+        self.sheet.append("[qwe]")
+        self.sheet.append("[qwe]")
+        self.sheet.append("[qwe]")
+        self.sheet.append("[qwe]")
+        self.sheet.append("[qwe]")
+        self.sheet.append("[qwe]")
+        buffer = self.sheet.export(ExportType.VP_SHEET_NO_METADATA),

@@ -1,6 +1,9 @@
-"""Parses virtual piano sheets by callbacks provided from an abstracted music sheet class"""
+"""Parses virtual piano sheets"""
 import io
-from core.vp.notations import PAUSE, CHORDS
+from core.vp.notations import PAUSE, CHORDS, BROKEN_CHORDS
+from core.sheet import Sheet
+from core.note import Note
+from core.chord import Chord
 
 symbol_to_notation = {}
 for notations in (PAUSE, CHORDS):
@@ -12,16 +15,18 @@ for notations in (PAUSE, CHORDS):
             symbol_to_notation[notation["symbol"]] = key
 
 
-def on_chord(keys):
+def on_chord(keys, value, rate):
     raise NotImplementedError()
 
 
-def on_note(key):
-    raise NotImplementedError()
+def on_note(key, value):
 
+
+def parse_rhythmic_value(buffer, )
 
 def parse(input_source):
     buffer = ""
+    sheet = Sheet()
 
     if isinstance(input_source, io.IOBase):
         for line in input_source:
@@ -29,17 +34,28 @@ def parse(input_source):
     else:
         buffer = input_source
 
+    # nobody would nest broken chords into chords... right?
     chord_buffer = ""
+    broken_chord_buffer = ""
     for char in buffer:
         if char in symbol_to_notation:
-            if char == CHORDS["begin"]["symbol"]:
+            if char == BROKEN_CHORDS["begin"]["symbol"]:
+                broken_chord_buffer = char
+            elif char == BROKEN_CHORDS["end"]["symbol"]:
+                on_chord(sheet,
+                         broken_chord_buffer.strip(BROKEN_CHORDS["begin"]["symbol"]), 1/16)
+                broken_chord_buffer = ""
+
+            elif char == CHORDS["begin"]["symbol"]:
                 chord_buffer = char
-            if char == CHORDS["end"]["symbol"]:
-                on_chord(
-                    chord_buffer.strip(CHORDS["begin"]["symbol"]))
+            elif char == CHORDS["end"]["symbol"]:
+                on_chord(sheet,
+                         chord_buffer.strip(CHORDS["begin"]["symbol"]), 1/4)
                 chord_buffer = ""
 
         elif len(chord_buffer) == 0:
             on_note(char)
         else:
             chord_buffer = chord_buffer + char
+
+    return sheet, buffer
