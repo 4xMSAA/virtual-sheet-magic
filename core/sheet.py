@@ -67,3 +67,10 @@ class Sheet():
 
     def replace(self, index: int, note_or_chord: Union[Note, Chord]):
         self.track[index] = note_or_chord
+
+    def set_tempo(self, tempo: float):
+        self.tempo = tempo
+
+    def set_beats_per_measure(self, beats: int, measure: int):
+        self.beats = beats
+        self.measure = measure
