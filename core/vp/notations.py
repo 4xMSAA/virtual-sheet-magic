@@ -26,7 +26,7 @@ PAUSE = {
 #                       1/16 1/16 rhythmic value instead of 1/8 1/8
 # q>w>e>r>t>y> -> play every note as half note rather than quarter note (1/2, 1/4)
 NOTE_VALUES = {
-    "less": {"symbol": "<"}
+    "less": {"symbol": "<"},
     "more": {"symbol": ">"}
 }
 
