@@ -1,6 +1,6 @@
+"""Tests whether parsing works as expected"""
 import unittest
-from core.vp.parser import Parser
-from core.sheet import Sheet
+from core.vp.parser import parse
 
 
 class TestParsing(unittest.TestCase):
@@ -11,9 +11,5 @@ class TestParsing(unittest.TestCase):
                 self.vp_sheet = self.vp_sheet + line
 
     def test_parser(self):
-        parser = Parser(callback_meta=Sheet.on_meta,
-                        callback_note=Sheet.on_note,
-                        callback_chord=Sheet.on_chord,
-                        callback_pause=Sheet.on_pause)
-        parser.parse(self.vp_sheet)
-        self.assertEqual(parser.buffer, self.vp_sheet.replace(r"(\n|\r)", " "))
+        parser = parse(self.vp_sheet)
+        self.assertEqual(parser, self.vp_sheet.replace(r"(\n|\r)", " "))

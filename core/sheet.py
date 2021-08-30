@@ -1,15 +1,34 @@
-"""Responsible for storing notes/chords. Implement `on_*` callbacks by extending this class."""
+"""Responsible for storing notes/chords."""
 from typing import Union
 from enum import Enum
 from core.chord import Chord
 from core.note import Note
+import core.vp.notations as notations
 
 
 class ExportType(Enum):
-    """Enum for types of files that can be exported"""
+    """Enum for types of files that can be exported."""
     VP_SHEET = 0
     VP_SHEET_NO_METADATA = 1
     MIDI = 2
+
+
+def get_chord_value(chord: Chord):
+    return Chord[0].value
+
+
+def value_to_notation(value: int):
+    return value > 1 and ">" * value or value < 1 and "<" * (1 / value) or None
+
+
+def make_vp_chord(chord: Chord, transpose: int):
+    buffer = ""
+    if get_chord_value(chord) == 1/16:
+        buffer = buffer + notations.BROKEN_CHORDS.begin.symbol + "".join(
+            chord.as_keys(transpose)) + notations.BROKEN_CHORDS.end.symbol
+    else:
+        buffer = buffer + notations.CHORDS.begin.symbol + "".join(
+            chord.as_keys(transpose)) + notations.CHORDS.end.symbol
 
 
 class Sheet():
@@ -31,8 +50,7 @@ class Sheet():
 
             for note_or_chord in self.track:
                 if isinstance(note_or_chord, Chord):
-                    buffer = buffer + "[" + "".join(
-                        note_or_chord.as_keys(self.transpose)) + "]"
+                    buffer = buffer + make_vp_chord(note_or_chord, self.transpose)
                 elif isinstance(note_or_chord, Note):
                     buffer = buffer + note_or_chord.to_key(self.transpose)
 
@@ -49,15 +67,3 @@ class Sheet():
 
     def replace(self, index: int, note_or_chord: Union[Note, Chord]):
         self.track[index] = note_or_chord
-
-    def on_meta(self):
-        raise NotImplementedError()
-
-    def on_note(self):
-        raise NotImplementedError()
-
-    def on_chord(self):
-        raise NotImplementedError()
-
-    def on_pause(self):
-        raise NotImplementedError()
