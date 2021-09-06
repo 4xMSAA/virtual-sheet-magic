@@ -1,4 +1,4 @@
-from core.sheet import Sheet, ExportType
+from core.sheet import Sheet
 from core.chord import Chord
 import unittest
 
@@ -8,18 +8,6 @@ class TestSheet(unittest.TestCase):
         self.sheet = Sheet()
 
     def test_sheet_append(self):
-        self.assertEqual(self.sheet.export(ExportType.VP_SHEET_NO_METADATA),
-                         "")
+        self.assertEqual(len(self.sheet), 0)
         self.sheet.append(Chord(from_keys="qwe"))
-        self.assertEqual(self.sheet.export(ExportType.VP_SHEET_NO_METADATA),
-                         "[qwe]")
-
-    def test_sheet_export(self):
-        self.sheet.append("[qwe]")
-        self.sheet.append("[qwe]")
-        self.sheet.append("[qwe]")
-        self.sheet.append("[qwe]")
-        self.sheet.append("[qwe]")
-        self.sheet.append("[qwe]")
-
-        buffer = self.sheet.export(ExportType.VP_SHEET_NO_METADATA)
+        self.assertEqual(len(self.sheet), 1)

@@ -1,31 +1,9 @@
 """Responsible for storing notes/chords."""
+
+
 from typing import Union
-from enum import Enum
 from core.chord import Chord
-from core.note import Note, NoteValue
-import core.vp.notations as notations
-
-
-class ExportType(Enum):
-    """Enum for types of files that can be exported."""
-    VP_SHEET = 0
-    VP_SHEET_NO_METADATA = 1
-    MIDI = 2
-
-
-def value_to_notation(value: float):
-    return value > 1 and ">" * value or value < 1 and "<" * (1 / value) or None
-
-
-def make_vp_chord(chord: Chord, transpose: int):
-    buffer = ""
-    if chord.value == 1/16:
-        buffer = buffer + notations.BROKEN_CHORDS["begin"]["symbols"][0] + "".join(
-            chord.as_keys(transpose)) + notations.BROKEN_CHORDS["end"]["symbols"][0]
-    else:
-        buffer = buffer + notations.CHORDS["begin"]["symbols"][0] + "".join(
-            chord.as_keys(transpose)) + notations.CHORDS["end"]["symbols"][0]
-    return buffer
+from core.note import Note
 
 
 class Sheet():
@@ -39,25 +17,6 @@ class Sheet():
         self.beats = beats
         self.measure = measure
         self.transpose = transpose
-
-    def export(self, export_type: ExportType) -> str:
-        if export_type == ExportType.VP_SHEET or export_type == ExportType.VP_SHEET_NO_METADATA:
-            # do conversion to virtual piano sheet
-            buffer = ""
-
-            for note_or_chord in self.track:
-                if isinstance(note_or_chord, Chord):
-                    buffer = buffer + make_vp_chord(note_or_chord, self.transpose)
-                elif isinstance(note_or_chord, Note):
-                    buffer = buffer + note_or_chord.to_key(self.transpose)
-
-            # include metadata
-            if export_type == ExportType.VP_SHEET:
-                raise NotImplementedError()
-
-            return buffer
-
-        raise ValueError("no such ExportType as {}".format(export_type))
 
     def append(self, note_or_chord: Union[Note, Chord]):
         self.track.append(note_or_chord)
