@@ -43,6 +43,11 @@ def on_broken_chord(sheet, keys, value):
 
 
 def on_note(sheet, key, value):
+    note = Note(from_key=key, value=value)
+    sheet.append(note)
+
+
+def on_pause(sheet, char):
     raise NotImplementedError()
 
 

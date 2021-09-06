@@ -52,9 +52,10 @@ class Note():
             index (int, optional): The MIDI note index to use. Defaults to A4_MIDI_INDEX.
             from_key (str, optional): Virtual piano key that is converted to MIDI index.
                                       Defaults to None.
-            value (Union[float, NoteValue], optional): Note value that indicates the relative pause between notes in
-                                   a multiplying manner. Defaults to QUARTER.
-            transpose (int, optional): How much to transpose the note  up/down. Defaults to 0.
+            value (Union[float, NoteValue], optional): Note value that indicates the relative pause
+                                                       between notes in a multiplying manner.
+                                                       Defaults to QUARTER.
+            transpose (int, optional): How much to transpose the note up/down. Defaults to 0.
         """
         if from_key is not None:
             self.from_key(from_key)
