@@ -20,11 +20,11 @@ def value_to_notation(value: float):
 def make_vp_chord(chord: Chord, transpose: int):
     buffer = ""
     if chord.value == 1/16:
-        buffer = buffer + notations.BROKEN_CHORDS["begin"]["symbol"] + "".join(
-            chord.as_keys(transpose)) + notations.BROKEN_CHORDS["end"]["symbol"]
+        buffer = buffer + notations.BROKEN_CHORDS["begin"]["symbols"][0] + "".join(
+            chord.as_keys(transpose)) + notations.BROKEN_CHORDS["end"]["symbols"][0]
     else:
-        buffer = buffer + notations.CHORDS["begin"]["symbol"] + "".join(
-            chord.as_keys(transpose)) + notations.CHORDS["end"]["symbol"]
+        buffer = buffer + notations.CHORDS["begin"]["symbols"][0] + "".join(
+            chord.as_keys(transpose)) + notations.CHORDS["end"]["symbols"][0]
     return buffer
 
 

@@ -33,14 +33,14 @@ NOTE_VALUE_OFFSETS = {
 
 # notes which are played simultaneously
 CHORDS = {
-    "begin": {"symbol": "["},
-    "end": {"symbol": "]"}
+    "begin": {"symbols": ["["]},
+    "end": {"symbols": ["]"]}
 }
 
 # notes which are played VERY FAST but not simultaneously
 # they maintain the same rhythmic value as chords
 # but the rate at which you play the keys is assumably, 1/32
 BROKEN_CHORDS = {
-    "begin": {"symbol": "{"},
-    "end": {"symbol": "}"}
+    "begin": {"symbols": ["{"]},
+    "end": {"symbols": ["}"]}
 }

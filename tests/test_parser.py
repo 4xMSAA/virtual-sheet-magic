@@ -1,6 +1,9 @@
 """Tests whether parsing works as expected"""
+
+
 import unittest
-from core.vp.parser import parse
+from core.sheet import Sheet
+from core.vp.parser import parse_into
 
 location = "tests/resources/test.vpsheet"
 
@@ -15,17 +18,20 @@ class TestParsing(unittest.TestCase):
                 self.vp_sheet = self.vp_sheet + line
 
     def test_parser_from_str(self):
-        sheet = parse(self.vp_sheet)
+        sheet = Sheet()
+        parse_into(sheet, self.vp_sheet)
 
         self.assertCountEqual(sheet.track, 10)
 
     def test_parser_from_stdio(self):
         with open(location) as file:
-            sheet = parse(file)
+            sheet = Sheet()
+            parse_into(sheet, file)
 
             self.assertCountEqual(sheet.track, 10)
 
     def test_parser_simple(self):
-        sheet = parse(sheet_simple)
+        sheet = Sheet()
+        parse_into(sheet, sheet_simple)
 
-        self.assertCountEqual(sheet.track, 6)
+        self.assertEqual(len(sheet.track), 6)

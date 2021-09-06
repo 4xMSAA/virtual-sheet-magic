@@ -4,28 +4,20 @@
 import io
 from enum import Enum
 from core.vp.notations import NOTE_VALUE_OFFSETS, PAUSE, CHORDS, BROKEN_CHORDS
-from core.sheet import Sheet
 from core.note import Note
 from core.chord import Chord
 
-PAUSE_SYMBOLS = {}
-for notation in PAUSE:
-    for symbol in notation["symbols"]:
-        PAUSE_SYMBOLS[symbol] = notation["scale"]
 
 NOTE_VALUE_OFFSET_SYMBOLS = {}
-for notation in NOTE_VALUE_OFFSETS:
+for notation in NOTE_VALUE_OFFSETS.values():
     for symbol in notation["symbols"]:
         NOTE_VALUE_OFFSET_SYMBOLS[symbol] = notation
 
-ACTIVE_SYMBOLS = {}
-for notations in (BROKEN_CHORDS, CHORDS):
-    for key, notation in notations.items():
-        if "symbols" in notation:
-            for symbol in notation["symbols"]:
-                ACTIVE_SYMBOLS[symbol] = key
-        else:
-            ACTIVE_SYMBOLS[notation["symbol"]] = key
+INTERRUPT_SYMBOLS = {}
+for notations in (BROKEN_CHORDS, CHORDS, PAUSE):
+    for index, notation in notations.items():
+        for symbol in notation["symbols"]:
+            INTERRUPT_SYMBOLS[symbol] = [index, notation]
 
 
 class Mode(Enum):
@@ -74,15 +66,20 @@ def parse_into(sheet, input_source):
     else:
         buffer = input_source
 
+    buffer = buffer + "\0"
     mode = Mode.NORMAL
     chord_stack = []
     word = ""
 
     for char in buffer:
-        if char in ACTIVE_SYMBOLS or char.isalnum():
-            key = word.strip(PAUSE_SYMBOLS.keys()).strip().strip(ACTIVE_SYMBOLS.keys())
-            if mode == Mode.NORMAL and len(word) > 0:
+        if char in INTERRUPT_SYMBOLS or char.isalnum() or char == "\0":
+            key = word.strip().strip("".join(INTERRUPT_SYMBOLS.keys()))
+
+            if mode == Mode.NORMAL and len(word.strip()) > 0:
                 on_note(sheet, key, parse_rhythmic_value(word))
+                word = ""
+
+            word = word + char
         else:
             word = word + char
 

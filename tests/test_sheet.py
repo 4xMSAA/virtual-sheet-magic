@@ -21,4 +21,5 @@ class TestSheet(unittest.TestCase):
         self.sheet.append("[qwe]")
         self.sheet.append("[qwe]")
         self.sheet.append("[qwe]")
-        buffer = self.sheet.export(ExportType.VP_SHEET_NO_METADATA),
+
+        buffer = self.sheet.export(ExportType.VP_SHEET_NO_METADATA)
