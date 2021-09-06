@@ -4,6 +4,8 @@ from core.vp.parser import parse
 
 location = "tests/resources/test.vpsheet"
 
+sheet_simple = "a b c d e f"
+
 
 class TestParsing(unittest.TestCase):
     def setUp(self):
@@ -13,10 +15,17 @@ class TestParsing(unittest.TestCase):
                 self.vp_sheet = self.vp_sheet + line
 
     def test_parser_from_str(self):
-        parsed_sheet, buffer = parse(self.vp_sheet)
-        self.assertEqual(buffer, self.vp_sheet.replace(r"(\n|\r)", " "))
+        sheet = parse(self.vp_sheet)
+
+        self.assertCountEqual(sheet.track, 10)
 
     def test_parser_from_stdio(self):
         with open(location) as file:
-            parsed_sheet, buffer = parse(file)
-            self.assertEqual(buffer, self.vp_sheet.replace(r"(\n|\r)", " "))
+            sheet = parse(file)
+
+            self.assertCountEqual(sheet.track, 10)
+
+    def test_parser_simple(self):
+        sheet = parse(sheet_simple)
+
+        self.assertCountEqual(sheet.track, 6)

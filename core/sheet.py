@@ -2,7 +2,7 @@
 from typing import Union
 from enum import Enum
 from core.chord import Chord
-from core.note import Note
+from core.note import Note, NoteValue
 import core.vp.notations as notations
 
 
@@ -13,7 +13,7 @@ class ExportType(Enum):
     MIDI = 2
 
 
-def value_to_notation(value: int):
+def value_to_notation(value: float):
     return value > 1 and ">" * value or value < 1 and "<" * (1 / value) or None
 
 

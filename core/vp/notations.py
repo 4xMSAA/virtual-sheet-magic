@@ -3,11 +3,11 @@
 # notes that indicate pausing
 PAUSE = {
     "eight": {
-        "symbols": [",", "-"],
+        "symbols": ["'", "-"],
         "scale": 1 / 8
     },
     "quarter": {
-        "symbols": ["'", "="],
+        "symbols": ["="],
         "scale": 1 / 4
     },
     "half": {
@@ -15,24 +15,38 @@ PAUSE = {
         "scale": 1 / 2
     },
     "whole": {
-        "symbol": ":",
+        "symbols": [":"],
         "scale": 1
+    }
+}
+
+NOTE_VALUES = {
+    "quarter": {
+        "symbols": [" ", "\n"],
+        "scale": 1 / 4
     }
 }
 
 # used for more precise control over note values. e.g: every < splits further by 2
 # more examples:
-# <[qwerty]<[qwerty] -> play [qwerty][qwerty] by
+# [qwerty]<[qwerty]< -> play [qwerty][qwerty] by
 #                       1/16 1/16 rhythmic value instead of 1/8 1/8
-# q>w>e>r>t>y> -> play every note as half note rather than quarter note (1/2, 1/4)
-NOTE_VALUES = {
-    "less": {"symbol": "<"},
-    "more": {"symbol": ">"}
+# q> w> e> r> t> y>  -> play every note as half note rather than quarter note (1/2, 1/4)
+NOTE_VALUE_OFFSETS = {
+    "less": {"symbols": ["<"]},
+    "more": {"symbols": [">"]}
 }
 
 # notes which are played simultaneously
-CHORDS = {"begin": {"symbol": "["}, "end": {"symbol": "]"}}
+CHORDS = {
+    "begin": {"symbol": "["},
+    "end": {"symbol": "]"}
+}
 
 # notes which are played VERY FAST but not simultaneously
-# assumably, this is used with 1/16 rhyhtmic values
-BROKEN_CHORDS = {"begin": {"symbol": "{"}, "end": {"symbol": "}"}}
+# they maintain the same rhythmic value as chords
+# but the rate at which you play the keys is assumably, 1/32
+BROKEN_CHORDS = {
+    "begin": {"symbol": "{"},
+    "end": {"symbol": "}"}
+}
