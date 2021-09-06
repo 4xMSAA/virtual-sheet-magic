@@ -17,7 +17,11 @@ INTERRUPT_SYMBOLS = {}
 for notations in (BROKEN_CHORDS, CHORDS, PAUSE):
     for index, notation in notations.items():
         for symbol in notation["symbols"]:
-            INTERRUPT_SYMBOLS[symbol] = [index, notation]
+            INTERRUPT_SYMBOLS[symbol] = {
+                "meaning": index,
+                "rules": notation,
+                "set": notations
+            }
 
 
 class Mode(Enum):
@@ -27,7 +31,8 @@ class Mode(Enum):
 
 
 def on_chord(sheet, keys, value):
-    raise NotImplementedError()
+    chord = Chord(from_keys=keys, value=value)
+    sheet.append(chord)
 
 
 def on_broken_chord(sheet, keys, value):
@@ -70,14 +75,39 @@ def parse_into(sheet, input_source):
     mode = Mode.NORMAL
     chord_stack = []
     word = ""
+    line = 0
+    col = 0
 
     for char in buffer:
+        col = col + 1
+
+        if char == "\n":
+            col = 0
+            line = line + 1
+
         if char in INTERRUPT_SYMBOLS or char.isalnum() or char == "\0":
             key = word.strip().strip("".join(INTERRUPT_SYMBOLS.keys()))
+            rhythmic_value = parse_rhythmic_value(word)
 
-            if mode == Mode.NORMAL and len(word.strip()) > 0:
-                on_note(sheet, key, parse_rhythmic_value(word))
+            if mode == Mode.NORMAL and len(key) > 0:
+                on_note(sheet, key, rhythmic_value)
                 word = ""
+
+            if char in INTERRUPT_SYMBOLS:
+                entry = INTERRUPT_SYMBOLS[char]
+
+                if entry["set"] is CHORDS:
+                    if entry["meaning"] == "begin":
+                        chord_stack.append(mode)
+                        mode = Mode.CHORD
+                    elif entry["meaning"] == "end" and Mode.CHORD:
+                        previous_mode = chord_stack.pop()
+                        mode = previous_mode
+
+                        on_chord(sheet, key, rhythmic_value)
+                        word = ""
+                    else:
+                        raise SyntaxError("CHORD mode did not end properly (@{line},{col})")
 
             word = word + char
         else:

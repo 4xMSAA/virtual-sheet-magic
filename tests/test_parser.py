@@ -21,14 +21,14 @@ class TestParsing(unittest.TestCase):
         sheet = Sheet()
         parse_into(sheet, self.vp_sheet)
 
-        self.assertCountEqual(sheet.track, 10)
+        self.assertEqual(len(sheet.track), 10)
 
     def test_parser_from_stdio(self):
         with open(location) as file:
             sheet = Sheet()
             parse_into(sheet, file)
 
-            self.assertCountEqual(sheet.track, 10)
+            self.assertEqual(len(sheet.track), 10)
 
     def test_parser_simple(self):
         sheet = Sheet()
