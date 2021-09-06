@@ -1,5 +1,6 @@
 """Somewhat arbitrary notations from the varied amount of virtual piano music sheets seen online."""
 
+
 # notes that indicate pausing
 PAUSE = {
     "eight": {
@@ -17,13 +18,6 @@ PAUSE = {
     "whole": {
         "symbols": [":"],
         "scale": 1
-    }
-}
-
-NOTE_VALUES = {
-    "quarter": {
-        "symbols": [" ", "\n"],
-        "scale": 1 / 4
     }
 }
 
