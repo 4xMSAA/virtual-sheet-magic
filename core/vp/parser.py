@@ -86,7 +86,7 @@ def parse_into(sheet, input_source):
             line = line + 1
 
         if char in INTERRUPT_SYMBOLS or char.isalnum() or char == "\0":
-            key = word.strip().strip("".join(INTERRUPT_SYMBOLS.keys()))
+            key = word.translate(word.maketrans("", "", "".join(INTERRUPT_SYMBOLS.keys()))).strip()
             rhythmic_value = parse_rhythmic_value(word)
 
             if mode == Mode.NORMAL and len(key) > 0:
