@@ -8,6 +8,6 @@ class TestSheet(unittest.TestCase):
         self.sheet = Sheet()
 
     def test_sheet_append(self):
-        self.assertEqual(len(self.sheet), 0)
+        self.assertEqual(len(self.sheet.track), 0)
         self.sheet.append(Chord(from_keys="qwe"))
-        self.assertEqual(len(self.sheet), 1)
+        self.assertEqual(len(self.sheet.track), 1)
