@@ -16,7 +16,7 @@ class Player:
         self.playing = False
 
     def step(self):
-        if self.cursor + 1 > len(self.sheet.track):
+        if self.cursor + 1 >= len(self.sheet.track):
             raise Exception(
                 f"cursor cannot exceed track length @{self.cursor + 1} > {len(self.sheet.track)}")
 
@@ -63,9 +63,8 @@ class Player:
         self.playing = False
 
     def __play_loop(self):
-        while self.cursor < len(self.sheet.track):
-            if self.playing:
-                entry = self.step()
+        while self.playing and self.cursor + 1 < len(self.sheet.track):
+            entry = self.step()
 
-                # TODO: figure out how to use beats per measure for sleeping
-                sleep(60 / self.tempo / (0.25 / entry.value))
+            # TODO: figure out how to use beats per measure for sleeping
+            sleep(60 / self.tempo / (0.25 / entry.value))
