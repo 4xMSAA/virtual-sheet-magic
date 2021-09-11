@@ -1,5 +1,5 @@
 import core.vp.notations as notations
-from core.note import Note, NoteValue
+from core.note import Note
 from core.chord import Chord
 
 

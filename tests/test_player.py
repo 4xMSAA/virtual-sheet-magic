@@ -43,3 +43,7 @@ class TestPlayer(unittest.TestCase):
             self.player.step()
 
         self.assertEqual(self.input_mock, "abcdefabcdefabcdef")
+
+    def test_play(self):
+        self.player.play()
+        self.assertEqual(self.input_mock, "abcdefabcdefabcdef")
