@@ -1,8 +1,9 @@
+from sys import stdout
 from time import sleep
 from threading import Thread
-from core.sheet import Sheet
-from core.note import Note
-from core.chord import Chord
+from core import Sheet
+from core import Note
+from core import Chord
 from player.input_wrappers.base import BaseInputWrapper
 
 
@@ -44,19 +45,22 @@ class Player:
 
         self.cursor = index
 
+    def set_tempo(self, tempo: float):
+        self.tempo = tempo
+
     def set_input_wrapper(self, input_wrapper: BaseInputWrapper):
         if isinstance(input_wrapper, BaseInputWrapper):
             self.input = input_wrapper
         else:
             raise Exception("input wrapper doesn't extend from BaseInputWrapper")
 
-    def play(self, sync: bool = False):
+    def play(self, asynchronous: bool = False):
         self.playing = True
 
-        if sync and not self.__thread:
+        if asynchronous and not self.__thread:
             self.__thread = Thread(target=self.__play_loop, args=(self,))
             self.__thread.start()
-        elif not sync:
+        elif not asynchronous:
             self.__play_loop()
 
     def pause(self):
@@ -67,4 +71,7 @@ class Player:
             entry = self.step()
 
             # TODO: figure out how to use beats per measure for sleeping
-            sleep(60 / self.tempo / (0.25 / entry.value))
+            sleep_time = (60 / self.tempo) * entry.value
+
+            stdout.write(f"n{entry.value} s{sleep_time}; ")
+            sleep(sleep_time)

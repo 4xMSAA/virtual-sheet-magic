@@ -4,7 +4,7 @@ from core.note import Note
 from core.chord import Chord
 from core.vp.parser import parse_into
 from player.input_wrappers.base import BaseInputWrapper
-from player.main import Player
+from player import Player
 
 
 test_sheet = "a b c d e f [abc][def] abcdef"
