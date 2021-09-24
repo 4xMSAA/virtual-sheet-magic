@@ -1,9 +1,7 @@
 from sys import stdout
 from time import sleep
 from threading import Thread
-from core import Sheet
-from core import Note
-from core import Chord
+from core import Sheet, Note, Chord, Pause
 from player.input_wrappers.base import BaseInputWrapper
 
 
@@ -30,6 +28,9 @@ class Player:
             self.input.send_chord(entry)
         elif isinstance(entry, Note):
             self.input.send_note(entry)
+        elif isinstance(entry, Pause):
+            # do nothing for now
+            pass
         else:
             print(f"unknown instance in track (@{self.cursor}")
 

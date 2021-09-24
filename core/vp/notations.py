@@ -3,21 +3,21 @@
 
 # notes that indicate pausing
 PAUSE = {
+    "sixteenth": {
+        "symbols": ["'"],
+        "scale": 1 / 16
+    },
     "eight": {
-        "symbols": ["'", "-"],
+        "symbols": ["="],
         "scale": 1 / 8
     },
     "quarter": {
-        "symbols": ["="],
+        "symbols": ["|", "-"],
         "scale": 1 / 4
     },
     "half": {
-        "symbols": ["|"],
-        "scale": 1 / 2
-    },
-    "whole": {
         "symbols": [":"],
-        "scale": 1
+        "scale": 1 / 2
     }
 }
 

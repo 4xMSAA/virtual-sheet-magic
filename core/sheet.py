@@ -8,15 +8,16 @@ from core.note import Note
 
 class Sheet():
     def __init__(self,
-                 tempo: float = 110,
+                 tempo: float = 120,
                  beats: int = 4,
                  measure: int = 4,
                  transpose: int = 0):
-        self.track = []
+        self.version = "1.0.0"
         self.tempo = tempo
         self.beats = beats
         self.measure = measure
         self.transpose = transpose
+        self.track = []
 
     def append(self, note_or_chord: Union[Note, Chord]):
         self.track.append(note_or_chord)

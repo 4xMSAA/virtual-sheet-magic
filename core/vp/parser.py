@@ -4,8 +4,7 @@
 import io
 from enum import Enum
 from core.vp.notations import NOTE_VALUE_OFFSETS, PAUSE, CHORDS, BROKEN_CHORDS
-from core.note import Note
-from core.chord import Chord
+from core import Note, Chord, Pause
 
 
 NOTE_VALUE_OFFSET_SYMBOLS = {}
@@ -18,8 +17,8 @@ for notations in (BROKEN_CHORDS, CHORDS, PAUSE):
     for index, notation in notations.items():
         for symbol in notation["symbols"]:
             INTERRUPT_SYMBOLS[symbol] = {
-                "meaning": index,
-                "rules": notation,
+                "name": index,
+                "meaning": notation,
                 "set": notations
             }
 
@@ -44,12 +43,12 @@ def on_note(sheet, key, value):
     sheet.append(note)
 
 
-def on_pause(sheet, char):
-    raise NotImplementedError()
+def on_pause(sheet, value):
+    sheet.append(Pause(value=value))
 
 
 def parse_rhythmic_value(buffer):
-    divisor = 8  # initial rhythmic value. no spaces
+    divisor = 16  # initial rhythmic value. no spaces
     offset = 0
 
     for char in buffer:
@@ -62,7 +61,7 @@ def parse_rhythmic_value(buffer):
     return 1 / (divisor * (2 ** offset))
 
 
-def parse_into(sheet, input_source):
+def parse_into(sheet, input_source, **flags):
     buffer = ""
 
     if isinstance(input_source, io.IOBase):
@@ -85,6 +84,9 @@ def parse_into(sheet, input_source):
             col = 0
             line = line + 1
 
+        if flags["newline_as_pause"]:
+            on_pause(sheet, PAUSE["eight"].scale)
+
         if char in INTERRUPT_SYMBOLS or char.isalnum() or char == "\0":
             key = word.translate(word.maketrans("", "", "".join(INTERRUPT_SYMBOLS.keys()))).strip()
             rhythmic_value = parse_rhythmic_value(word)
@@ -96,11 +98,15 @@ def parse_into(sheet, input_source):
             if char in INTERRUPT_SYMBOLS:
                 entry = INTERRUPT_SYMBOLS[char]
 
+                if entry["set"] is PAUSE:
+                    on_pause(sheet, entry["meaning"]["scale"])
+                    word = ""
+
                 if entry["set"] is CHORDS:
-                    if entry["meaning"] == "begin":
+                    if entry["name"] == "begin":
                         chord_stack.append(mode)
                         mode = Mode.CHORD
-                    elif entry["meaning"] == "end" and Mode.CHORD:
+                    elif entry["name"] == "end" and Mode.CHORD:
                         previous_mode = chord_stack.pop()
                         mode = previous_mode
 
