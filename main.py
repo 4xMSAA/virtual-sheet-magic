@@ -8,7 +8,7 @@ from player import Player
 
 def parse_stdin(**flags) -> Sheet:
     sheet = Sheet()
-    parse_into(sheet, sys.stdin, flags)
+    parse_into(sheet, sys.stdin, **flags)
 
     return sheet
 
@@ -34,7 +34,7 @@ def play(args):
     player.play()
 
 
-def parse():
+def parse(args):
     sheet = parse_stdin()
     sys.stdout.write(jsons.dumps(sheet))
 
@@ -43,10 +43,12 @@ if __name__ == "__main__":
     argparser = ArgumentParser(
         description="""Edit, step through or autoplay virtual piano sheets"""
     )
-    subcommand = argparser.add_subparsers("subcommand")
-    parse_parser = subcommand.add_parser("parse", func=parse)
+    subcommand = argparser.add_subparsers()
+    parse_parser = subcommand.add_parser("parse")
+    parse_parser.set_defaults(func=parse)
 
-    play_parser = subcommand.add_parser("play", aliases=["p"], func=play)
+    play_parser = subcommand.add_parser("play", aliases=["p"])
+    play_parser.set_defaults(func=play)
     play_parser.add_argument("--input-wrapper", "-w",
                              dest="input_wrapper",
                              type=str,
@@ -68,3 +70,4 @@ if __name__ == "__main__":
                              action="store_true")
 
     args = argparser.parse_args()
+    args.func(args)

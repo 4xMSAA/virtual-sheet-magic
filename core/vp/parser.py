@@ -84,7 +84,7 @@ def parse_into(sheet, input_source, **flags):
             col = 0
             line = line + 1
 
-        if flags["newline_as_pause"]:
+        if "newline_as_pause" in flags:
             on_pause(sheet, PAUSE["eight"].scale)
 
         if char in INTERRUPT_SYMBOLS or char.isalnum() or char == "\0":
