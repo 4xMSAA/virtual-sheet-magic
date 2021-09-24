@@ -38,7 +38,13 @@ class PynputWrapper(BaseInputWrapper):
 
     def send_chord(self, chord: Chord):
         for note in chord:
-            self.keyboard.type(note.to_key())
+            self.send_note(note)
 
     def send_note(self, note: Note):
-        self.keyboard.type(note.to_key())
+        key = note.to_key()
+        if key in MINOR_KEYS:
+            self.keyboard.press(keyboard.Key.shift)
+            self.keyboard.type(MINOR_KEYS[key])
+            self.keyboard.release(keyboard.Key.shift)
+        else:
+            self.keyboard.type(key)

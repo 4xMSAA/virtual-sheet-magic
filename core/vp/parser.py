@@ -4,7 +4,7 @@
 import io
 from enum import Enum
 from core.vp.notations import NOTE_VALUE_OFFSETS, PAUSE, CHORDS, BROKEN_CHORDS
-from core import Note, Chord, Pause
+from core import KEY_MAP, Note, Chord, Pause
 
 
 NOTE_VALUE_OFFSET_SYMBOLS = {}
@@ -89,7 +89,7 @@ def parse_into(sheet, input_source, **flags):
             if flags["newline_pauses"]:
                 on_pause(sheet, PAUSE["eight"]["scale"])
 
-        if char in INTERRUPT_SYMBOLS or char.isalnum() or char == "\0":
+        if char in INTERRUPT_SYMBOLS or char in KEY_MAP or char == "\0":
             key = word.translate(word.maketrans("", "", "".join(INTERRUPT_SYMBOLS.keys()))).strip()
             rhythmic_value = parse_rhythmic_value(word)
 
