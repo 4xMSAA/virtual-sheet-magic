@@ -74,5 +74,4 @@ class Player:
             # TODO: figure out how to use beats per measure for sleeping
             sleep_time = (60 / self.tempo) * (4 * entry.value)
 
-            stdout.write(f"n{entry.value} s{sleep_time}; ")
             sleep(sleep_time)

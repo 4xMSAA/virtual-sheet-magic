@@ -35,7 +35,7 @@ def play(args):
 
 
 def parse(args):
-    sheet = parse_stdin()
+    sheet = parse_stdin(newline_pauses=args.flag_newline_pauses)
     sys.stdout.write(jsons.dumps(sheet))
 
 
@@ -46,6 +46,9 @@ if __name__ == "__main__":
     subcommand = argparser.add_subparsers()
     parse_parser = subcommand.add_parser("parse")
     parse_parser.set_defaults(func=parse)
+    parse_parser.add_argument("--newline-pauses", "-N",
+                              dest="flag_newline_pauses",
+                              action="store_true")
 
     play_parser = subcommand.add_parser("play", aliases=["p"])
     play_parser.set_defaults(func=play)

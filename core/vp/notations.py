@@ -8,11 +8,11 @@ PAUSE = {
         "scale": 1 / 16
     },
     "eight": {
-        "symbols": ["="],
+        "symbols": ["|", "-"],
         "scale": 1 / 8
     },
     "quarter": {
-        "symbols": ["|", "-"],
+        "symbols": ["="],
         "scale": 1 / 4
     },
     "half": {

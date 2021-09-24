@@ -57,6 +57,8 @@ def parse_rhythmic_value(buffer):
             offset = offset + keyword == "less" and -1 or 1
         elif char.isspace():
             divisor = divisor / 2
+            if char == "\n":
+                break
 
     return 1 / (divisor * (2 ** offset))
 
@@ -74,7 +76,7 @@ def parse_into(sheet, input_source, **flags):
     mode = Mode.NORMAL
     chord_stack = []
     word = ""
-    line = 0
+    line = 1
     col = 0
 
     for char in buffer:
@@ -84,8 +86,8 @@ def parse_into(sheet, input_source, **flags):
             col = 0
             line = line + 1
 
-        if "newline_as_pause" in flags:
-            on_pause(sheet, PAUSE["eight"].scale)
+            if flags["newline_pauses"]:
+                on_pause(sheet, PAUSE["eight"]["scale"])
 
         if char in INTERRUPT_SYMBOLS or char.isalnum() or char == "\0":
             key = word.translate(word.maketrans("", "", "".join(INTERRUPT_SYMBOLS.keys()))).strip()
@@ -99,7 +101,7 @@ def parse_into(sheet, input_source, **flags):
                 entry = INTERRUPT_SYMBOLS[char]
 
                 if entry["set"] is PAUSE:
-                    on_pause(sheet, entry["meaning"]["scale"])
+                    on_pause(sheet, entry["meaning"]["scale"] + rhythmic_value)
                     word = ""
 
                 if entry["set"] is CHORDS:
