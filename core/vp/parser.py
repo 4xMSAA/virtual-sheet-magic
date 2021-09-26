@@ -64,6 +64,8 @@ def parse_rhythmic_value(buffer):
 
 
 def parse_into(sheet, input_source, **flags):
+    # TODO: refactor me!
+
     buffer = ""
 
     if isinstance(input_source, io.IOBase):
@@ -94,7 +96,13 @@ def parse_into(sheet, input_source, **flags):
             rhythmic_value = parse_rhythmic_value(word)
 
             if mode == Mode.NORMAL and len(key) > 0:
-                on_note(sheet, key, rhythmic_value)
+                # hacky behaviour that i do not like
+                # because this should be handled by the "end" of a chord
+                # but if we do it there, we can't get the rhythmic value
+                if len(key) > 1:
+                    on_chord(sheet, key, rhythmic_value)
+                else:
+                    on_note(sheet, key, rhythmic_value)
                 word = ""
 
             if char in INTERRUPT_SYMBOLS:
@@ -106,14 +114,17 @@ def parse_into(sheet, input_source, **flags):
 
                 if entry["set"] is CHORDS:
                     if entry["name"] == "begin":
+                        # hacky behaviour that i do not like [2]
+                        if word != "" and len(key) > 1:
+                            on_chord(sheet, key, rhythmic_value)
+                            word = ""
+
                         chord_stack.append(mode)
                         mode = Mode.CHORD
                     elif entry["name"] == "end" and Mode.CHORD:
                         previous_mode = chord_stack.pop()
                         mode = previous_mode
 
-                        on_chord(sheet, key, rhythmic_value)
-                        word = ""
                     else:
                         raise SyntaxError("CHORD mode did not end properly (@{line},{col})")
 
