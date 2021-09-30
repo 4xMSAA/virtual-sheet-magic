@@ -88,7 +88,7 @@ def parse_into(sheet, input_source, **flags):
             col = 0
             line = line + 1
 
-            if flags["newline_pauses"]:
+            if flags and flags["newline_pauses"]:
                 on_pause(sheet, PAUSE["eight"]["scale"])
 
         if char in INTERRUPT_SYMBOLS or char in KEY_MAP or char == "\0":
