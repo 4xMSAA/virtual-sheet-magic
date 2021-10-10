@@ -24,11 +24,16 @@ def play(args):
     player.set_input_wrapper(input_wrapper)
     player.play()
 
+    print(player.cursor)
+
 
 def add_command(subcommand):
     play_parser = subcommand.add_parser("play",
                                         aliases=["p"],
-                                        formatter_class=RawTextHelpFormatter)
+                                        formatter_class=RawTextHelpFormatter,
+                                        help="""
+                                        Plays a virtual sheet from `stdin`.
+                                        Outputs seeker value on exit to `stdout`""")
 
     play_parser.set_defaults(func=play)
     play_parser.add_argument("--input-wrapper", "-w",
@@ -40,6 +45,10 @@ def add_command(subcommand):
                              \tpynput - preferable on X11, macOS
                              \tkeyboard - preferable on Microsoft Windows
                              """))
+    play_parser.add_argument("--seek", "-s",
+                             dest="seek",
+                             type=int,
+                             help="Start the player at the provided number")
     play_parser.add_argument("--tempo", "-t",
                              dest="tempo",
                              type=float,
