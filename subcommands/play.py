@@ -16,13 +16,18 @@ def play(args):
 
     if args.tempo:
         player.set_tempo(args.tempo)
+    if args.seek:
+        player.set_cursor(args.seek)
 
     input_wrapper = default_input_wrapper
     if args.input_wrapper == "keyboard":
         input_wrapper = KeyboardWrapper()
 
     player.set_input_wrapper(input_wrapper)
-    player.play()
+    try:
+        player.play()
+    except KeyboardInterrupt:
+        pass
 
     print(player.cursor)
 
