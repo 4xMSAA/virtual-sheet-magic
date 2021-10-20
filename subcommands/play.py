@@ -53,15 +53,15 @@ def add_command(subcommand):
     play_parser.add_argument("--seek", "-s",
                              dest="seek",
                              type=int,
-                             help="Start the player at the provided number")
+                             help="Start the player at the provided number (measured in notes)")
     play_parser.add_argument("--tempo", "-t",
                              dest="tempo",
                              type=float,
                              help=dedent("""
-                             Overrides the tempo of the sheet being played. If not provided,
-                             uses the sheet's tempo or default (120)
+                             Overrides the tempo of the sheet being played.
+                             If not provided, uses the sheet's tempo or default (120)
                              """))
     play_parser.add_argument("--newline-pauses", "-N",
                              dest="flag_newline_pauses",
                              action="store_true",
-                             help="Toggle whether a newline should count as a pause note")
+                             help="Toggle whether a newline should count as a `|` (pause) note")
