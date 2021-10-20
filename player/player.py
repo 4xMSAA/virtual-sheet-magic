@@ -1,4 +1,3 @@
-from sys import stdout
 from time import sleep
 from threading import Thread
 from core import Sheet, Note, Chord, Pause
