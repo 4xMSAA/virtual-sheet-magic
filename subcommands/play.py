@@ -5,23 +5,22 @@ from util.project.common import parse_stdin
 
 
 def play(args):
-    from player.input_wrappers.pynput import PynputWrapper
-    from player.input_wrappers.keyboard import KeyboardWrapper
-
-    # TODO: determine this from OS
-    default_input_wrapper = PynputWrapper()
 
     sheet = parse_stdin(newline_pauses=args.flag_newline_pauses)
     player = Player(sheet=sheet)
+    input_wrapper = None
 
     if args.tempo:
         player.set_tempo(args.tempo)
     if args.seek:
         player.set_cursor(args.seek)
 
-    input_wrapper = default_input_wrapper
     if args.input_wrapper == "keyboard":
+        from player.input_wrappers.keyboard import KeyboardWrapper
         input_wrapper = KeyboardWrapper()
+    else:
+        from player.input_wrappers.pynput import PynputWrapper
+        input_wrapper = PynputWrapper()
 
     player.set_input_wrapper(input_wrapper)
     try:

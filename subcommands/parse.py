@@ -1,9 +1,10 @@
 from sys import stdout
-from jsons import dumps
 from util.project.common import parse_stdin
 
 
 def parse(args):
+    from jsons import dumps
+
     sheet = parse_stdin(newline_pauses=args.flag_newline_pauses)
     # TODO: serialize the sheet better. this is just a lazy fix rn
     stdout.write(dumps(sheet))
