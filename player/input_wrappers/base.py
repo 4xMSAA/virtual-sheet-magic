@@ -30,7 +30,7 @@ MINOR_KEYS = {
 
 
 class BaseInputWrapper():
-    def has_minor_keys(chord: Chord) -> bool:
+    def has_minor_keys(self, chord: Chord) -> bool:
         for note in chord:
             if note.to_key() in MINOR_KEYS:
                 return True
