@@ -1,8 +1,7 @@
-from enum import Enum
 from core.note import Note
 
 
-class Chord(list[Note]):
+class Chord(list):
     def __init__(self,
                  notes: Note = None,
                  from_keys: str = None,
