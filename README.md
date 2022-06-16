@@ -35,9 +35,6 @@ Set up **virtual-sheet-magic** in a `virtualenv` - this way, you will not pollut
 
 ```sh
 $ python -m virtualenv .venv && source .venv/bin/activate && pip install -r requirements.txt
-
-# install development packages (preferably in virtualenv as well)
-$ pip install -r requirements-dev.txt
 ```
 
 ### `keyboard` versus `pynput`
