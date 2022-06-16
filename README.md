@@ -2,6 +2,31 @@
 
 ## Features
 
+- [x] Parse sheets into JSON with MIDI value indices and pause values (depends on JSONS, may be reimplemented)
+- [x] Play virtual piano sheets
+- [ ] **TODO:** Play MIDI files as virtual piano keys
+- [ ] **TODO:** Make, edit and listen to virtual piano sheets
+
+## Notes
+
+Unfortunately, a lot of virtual piano sheets do not have appropriate pausing; they are made to be played more 
+according to the _feel_ and your knowledge of the song. You may need to adjust the sheet with an editor of your choice
+and use the following symbols to pause appropriately.  
+
+- `'` (1/16) 
+- `|`, `-` (1/8)
+- `=` (1/4)
+- `:` (1/2)
+
+You can adjust individual note value by appending symbols to keys as well.
+
+- `<` (to divide rhythmic value by 2 per each `<` symbol, 1/8 -> 1/16 -> 1/32 -> 1/64...)
+- `>` (to multiply rhythmic value by 2 per each `>` symbol, 1/8 -> 1/4 -> 1/2 -> 1...)
+
+Additionally, you can use chords to play multiple keys at once.
+
+- `[]` - play keys simultaneuosly
+- `{}` - play keys near simultaneously, where each note has a rhythmic value of 1/32
 
 ## Installation
 
@@ -56,9 +81,9 @@ options:
 
 ## Example usage
 
-Browse around [Virtual Piano's collection of sheets](https://virtualpiano.net/music-sheets/) and copy/save into a file to try it out.
+Browse around [Virtual Piano's collection of sheets](https://virtualpiano.net/music-sheets/) and copy into clipboard or save into a file to try it out.
 
-```
+```sh
 $ python main.py play -t 110 < my-vp-sheet.txt
 $ sleep 1; python main.py play -t 110 < my-vp-sheet.txt
 $ xclip -i -sel c | python main.py play -t 160
