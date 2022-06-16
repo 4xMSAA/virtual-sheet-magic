@@ -83,6 +83,6 @@ Browse around [Virtual Piano's collection of sheets](https://virtualpiano.net/mu
 ```sh
 $ python main.py play -t 110 < my-vp-sheet.txt
 $ sleep 1; python main.py play -t 110 < my-vp-sheet.txt
-$ xclip -0 | python main.py play -t 160
-$ sleep 1; xclip -0 | python main.py play -s echo $([ -f /tmp/seeker-stopped-at ] && cat /tmp/seeker-stopped-at || echo 0) -t 160 > /tmp/seeker-stopped-at
+$ xclip -o | python main.py play -t 160
+$ sleep 1; xclip -o | python main.py play -s echo $([ -f /tmp/seeker-stopped-at ] && cat /tmp/seeker-stopped-at || echo 0) -t 160 > /tmp/seeker-stopped-at
 ```
